@@ -1,1 +1,209 @@
 
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#071426">
+  <meta name="description" content="AI Police Digital Defense: aprende a reconocer mensajes y enlaces sospechosos.">
+  <title>AI Police | Digital Defense</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #071426;
+      --panel: #10213a;
+      --cyan: #42e8f5;
+      --text: #f1f7ff;
+      --muted: #a9bdd4;
+      --border: #294461;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: radial-gradient(ellipse at top, #123253, var(--bg) 65%);
+      color: var(--text);
+      min-height: 100vh;
+    }
+    header, main, footer {
+      width: min(920px, 92%);
+      margin: auto;
+    }
+    header { padding: 30px 0 18px; }
+    .brand { display: flex; align-items: center; gap: 14px; }
+    .shield {
+      width: 55px; height: 55px; display: grid; place-items: center;
+      border: 2px solid var(--cyan); border-radius: 16px;
+      color: var(--cyan); font-size: 30px;
+      box-shadow: 0 0 22px #42e8f533;
+    }
+    h1 { margin: 0; font-size: clamp(25px, 5vw, 38px); letter-spacing: 2px; }
+    .subtitle { color: var(--cyan); letter-spacing: 3px; font-size: 12px; margin-top: 5px; }
+    .tagline { color: var(--muted); margin: 20px 0 0; }
+    .panel {
+      background: #10213aee;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: clamp(18px, 4vw, 30px);
+      margin: 20px 0;
+      box-shadow: 0 12px 36px #0003;
+    }
+    h2 { margin-top: 0; font-size: 22px; }
+    label { display: block; margin: 16px 0 8px; font-weight: bold; }
+    textarea {
+      width: 100%; min-height: 155px; resize: vertical;
+      background: #071426; color: var(--text);
+      border: 1px solid #365675; border-radius: 10px;
+      padding: 14px; font: inherit; line-height: 1.5;
+    }
+    textarea:focus { outline: 2px solid var(--cyan); }
+    button {
+      border: 0; border-radius: 10px; padding: 13px 18px;
+      font-size: 15px; font-weight: bold; cursor: pointer;
+    }
+    .primary { background: var(--cyan); color: #061426; margin-top: 14px; }
+    .secondary { background: #203b59; color: var(--text); margin: 14px 0 0 8px; }
+    button:hover { filter: brightness(1.08); }
+    .result { margin-top: 20px; padding: 16px; border-radius: 12px; background: #071426; }
+    .result h3 { margin: 0 0 8px; }
+    .result p, .result li { line-height: 1.6; }
+    .notice { color: var(--muted); font-size: 13px; line-height: 1.6; }
+    .plans { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 14px; }
+    .plan { border: 1px solid var(--border); padding: 18px; border-radius: 12px; }
+    .price { font-size: 25px; font-weight: bold; color: var(--cyan); }
+    footer { padding: 10px 0 35px; color: var(--muted); font-size: 12px; }
+    a { color: var(--cyan); }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="brand">
+      <div class="shield" aria-hidden="true">⬡</div>
+      <div>
+        <h1>AI POLICE</h1>
+        <div class="subtitle">DIGITAL DEFENSE</div>
+      </div>
+    </div>
+    <p class="tagline">Detectar · Comprender · Proteger</p>
+  </header>
+
+  <main>
+    <section class="panel">
+      <h2>🛡️ Analizador de mensajes sospechosos</h2>
+      <p>Revisa un mensaje o enlace antes de responder o abrirlo.</p>
+      <label for="message">Pega aquí el mensaje o enlace</label>
+      <textarea id="message" placeholder="Ejemplo: Tu cuenta será bloqueada. Haz clic en este enlace para verificar tu contraseña..."></textarea>
+      <button class="primary" id="analyze">Analizar mensaje</button>
+      <button class="secondary" id="clear">Limpiar</button>
+      <div id="result" class="result" aria-live="polite" hidden></div>
+      <p class="notice">Privacidad: el análisis de esta versión se realiza localmente en tu navegador. No pegues contraseñas, códigos de acceso ni datos bancarios.</p>
+    </section>
+
+    <section class="panel">
+      <h2>¿Cómo funciona?</h2>
+      <p>AI Police busca señales habituales de riesgo, como urgencia, solicitudes de contraseñas, premios inesperados o enlaces sospechosos.</p>
+      <p class="notice">Este prototipo usa reglas básicas. No consulta todavía bases de datos de amenazas en tiempo real y no puede confirmar si un mensaje es malicioso o seguro.</p>
+    </section>
+
+    <section class="panel">
+      <h2>Planes previstos</h2>
+      <div class="plans">
+        <div class="plan">
+          <h3>Free</h3>
+          <div class="price">Gratis</div>
+          <p>Análisis básico para comenzar.</p>
+        </div>
+        <div class="plan">
+          <h3>Premium</h3>
+          <div class="price">US$4,99/mes</div>
+          <p>Idea de precio; funciones aún no activadas.</p>
+        </div>
+        <div class="plan">
+          <h3>Business</h3>
+          <div class="price">US$19,99/mes</div>
+          <p>Idea de precio; funciones aún no activadas.</p>
+        </div>
+      </div>
+      <p class="notice">Los precios son propuestas, no planes de pago activos. Esta web no procesa pagos.</p>
+    </section>
+  </main>
+
+  <footer>
+    AI Police | Digital Defense · Prototipo educativo.
+    Ningún sistema de detección ofrece garantías absolutas.
+  </footer>
+
+  <script>
+    const message = document.getElementById("message");
+    const result = document.getElementById("result");
+
+    document.getElementById("analyze").addEventListener("click", () => {
+      const text = message.value.trim();
+      if (!text) {
+        result.hidden = false;
+        result.innerHTML = "<h3>Introduce un mensaje</h3><p>Pega primero el texto que quieres revisar.</p>";
+        return;
+      }
+
+      const checks = [
+        { re: /contraseñ|password|clave|código de verificaci[oó]n|c[oó]digo otp/i, label: "Solicita contraseñas o códigos de acceso" },
+        { re: /urgente|inmediatamente|última oportunidad|ahora mismo|en \d+ horas/i, label: "Utiliza lenguaje de urgencia" },
+        { re: /premio|ganaste|ganador|regalo gratis|has sido seleccionado/i, label: "Promete un premio o beneficio inesperado" },
+        { re: /cuenta.*(bloque|suspend|cerrar)|bloque.*cuenta|actividad sospechosa/i, label: "Amenaza con bloquear o suspender una cuenta" },
+        { re: /https?:\/\/|www\./i, label: "Contiene un enlace que conviene verificar" },
+        { re: /transferencia|pago inmediato|tarjeta bancaria|datos bancarios/i, label: "Menciona pagos o datos financieros" }
+      ];
+
+      const found = checks.filter(item => item.re.test(text));
+      const level = found.length >= 3 ? "Varias señales de alerta" :
+                    found.length >= 1 ? "Precaución recomendada" :
+                    "No se detectaron señales habituales";
+
+      const color = found.length >= 3 ? "#ff7777" :
+                    found.length >= 1 ? "#ffd166" : "#42e8a5";
+
+      result.hidden = false;
+      result.replaceChildren();
+
+      const title = document.createElement("h3");
+      title.textContent = "Resultado preliminar";
+      title.style.color = color;
+      result.appendChild(title);
+
+      const status = document.createElement("p");
+      status.textContent = level;
+      status.style.fontWeight = "bold";
+      result.appendChild(status);
+
+      if (found.length) {
+        const list = document.createElement("ul");
+        found.forEach(item => {
+          const li = document.createElement("li");
+          li.textContent = item.label;
+          list.appendChild(li);
+        });
+        result.appendChild(list);
+      } else {
+        const p = document.createElement("p");
+        p.textContent = "Las reglas básicas no encontraron señales habituales. Eso no garantiza que el mensaje sea seguro.";
+        result.appendChild(p);
+      }
+
+      const advice = document.createElement("p");
+      advice.textContent = "Recomendación: no abras enlaces inesperados ni compartas contraseñas o códigos. Verifica la solicitud por un canal oficial e independiente.";
+      result.appendChild(advice);
+
+      const disclaimer = document.createElement("p");
+      disclaimer.className = "notice";
+      disclaimer.textContent = "Este resultado se basa solo en reglas locales sencillas; no confirma ni descarta un ataque.";
+      result.appendChild(disclaimer);
+    });
+
+    document.getElementById("clear").addEventListener("click", () => {
+      message.value = "";
+      result.hidden = true;
+      result.replaceChildren();
+    });
+  </script>
+</body>
+</html>
