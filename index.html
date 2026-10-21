@@ -199,44 +199,91 @@
     const indicator = document.getElementById("indicator");
     const result = document.getElementById("result");
 
-    document.getElementById("analyze").addEventListener("click", () => {
-      const value = indicator.value.trim();
+document.getElementById("analyze").addEventListener("click", async () => {
+  const value = indicator.value.trim();
+  result.classList.remove("hidden");
 
-      result.classList.remove("hidden");
+  if (!value) {
+    result.textContent = "Introduce un indicador para iniciar la revisión.";
+    return;
+  }
 
-      if (!value) {
-        result.textContent = "Introduce un indicador para iniciar la revisión.";
-        return;
+  const findings = [];
+  let targetUrl = null;
+
+  try {
+    const parsed = new URL(value);
+    if (["http:", "https:"].includes(parsed.protocol)) {
+      targetUrl = parsed.href;
+    }
+  } catch {}
+
+  if (/https?:\/\//i.test(value)) {
+    findings.push("Se detectó un enlace. Comprueba el dominio exacto antes de abrirlo.");
+  }
+
+  if (/@/.test(value) && /https?:\/\//i.test(value)) {
+    findings.push("El texto contiene un símbolo @ junto a un enlace. Comprueba que no oculte el dominio real.");
+  }
+
+  if (/(password|contraseña|verify|verifica|urgent|urgente|premio|wallet|seed phrase)/i.test(value)) {
+    findings.push("Hay palabras que pueden aparecer en mensajes de riesgo. El contexto es importante.");
+  }
+
+  if (/(bit\.ly|tinyurl\.com|t\.co)\//i.test(value)) {
+    findings.push("Se detectó un dominio acortador. Comprueba el destino por un medio seguro.");
+  }
+
+  if (targetUrl) {
+    result.textContent = "Revisión local completada. Consultando URLhaus…";
+
+    try {
+      const endpoint =
+        "https://ia-policy-threats.jorgebarrientosw.workers.dev/?url=" +
+        encodeURIComponent(targetUrl);
+
+      const response = await fetch(endpoint);
+      const data = await response.json();
+
+      if (!response.ok || data.error) {
+        findings.push(
+          "No se pudo completar la consulta URLhaus: " +
+          (data.error || "error de conexión.")
+        );
+      } else if (data.query_status === "ok") {
+        findings.push(
+          "ALERTA: URLhaus tiene un registro de esta URL. Estado: " +
+          (data.url_status || "desconocido") +
+          ". Tipo de amenaza: " + (data.threat || "no especificado") + "."
+        );
+
+        if (Array.isArray(data.tags) && data.tags.length) {
+          findings.push("Etiquetas de URLhaus: " + data.tags.join(", "));
+        }
+      } else if (data.query_status === "no_results") {
+        findings.push(
+          "URLhaus no encontró esta URL en su base de datos. Esto NO demuestra que sea segura."
+        );
+      } else {
+        findings.push("URLhaus no devolvió un resultado concluyente.");
       }
+    } catch {
+      findings.push(
+        "No se pudo conectar con URLhaus. Comprueba la conexión e inténtalo más tarde."
+      );
+    }
+  } else {
+    findings.push(
+      "No se consultó URLhaus porque la entrada no es una URL completa que comience con http:// o https://."
+    );
+  }
 
-      const findings = [];
-      const lower = value.toLowerCase();
+  result.textContent =
+    "REVISIÓN PRELIMINAR\n\n" +
+    findings.map((item, index) => (index + 1) + ". " + item).join("\n\n") +
+    "\n\nLimitación: URLhaus registra amenazas conocidas. Un resultado sin coincidencias no garantiza que el enlace sea seguro.";
+});
 
-      if (/https?:\/\//i.test(value)) {
-        findings.push("Se detectó un enlace. Comprueba el dominio exacto antes de abrirlo.");
-      }
-
-      if (/@/.test(value) && /https?:\/\//i.test(value)) {
-        findings.push("El texto contiene un símbolo @ junto a un enlace. Comprueba que no oculte el dominio real.");
-      }
-
-      if (/(password|contraseña|verify|verifica|urgent|urgente|premio|wallet|seed phrase)/i.test(value)) {
-        findings.push("Hay palabras que pueden aparecer en mensajes de riesgo. El contexto es importante.");
-      }
-
-      if (/(bit\.ly|tinyurl\.com|t\.co)\//i.test(value)) {
-        findings.push("Se detectó un dominio acortador. Comprueba el destino por un medio seguro.");
-      }
-
-      if (findings.length === 0) {
-        findings.push("No se detectaron patrones básicos de esta lista. Esto no demuestra que el contenido sea seguro.");
-      }
-
-      result.textContent =
-        "REVISIÓN PRELIMINAR\n\n" +
-        findings.map((item, index) => (index + 1) + ". " + item).join("\n\n") +
-        "\n\nLimitación: esta herramienta usa reglas sencillas locales. No consulta reputación web, no ejecuta archivos y no confirma si un sitio es malicioso.";
-    });
 
     document.getElementById("clear").addEventListener("click", () => {
       indicator.value = "";
