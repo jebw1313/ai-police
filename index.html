@@ -285,7 +285,7 @@ let statusColor = "#fde68a";
 let statusBackground = "#451a03";
 
 if (findings.some(item => item.startsWith("ALERTA:"))) {
-  statusTitle = "⚠️ AMENAZA REGISTRADA";
+statusTitle = "🚨 PELIGRO: AMENAZA REGISTRADA";
   statusColor = "#fca5a5";
   statusBackground = "#450a0a";
 } else if (findings.some(item =>
@@ -309,10 +309,19 @@ if (findings.some(item => item.startsWith("ALERTA:"))) {
 }
 
 
+
+const recommendation = statusTitle.includes("PELIGRO")
+  ? "RECOMENDACIÓN: No visites esta dirección ni descargues archivos. Si ya descargaste algo, no lo ejecutes."
+  : statusTitle.includes("SIN COINCIDENCIAS")
+    ? "RECOMENDACIÓN: No se encontraron coincidencias conocidas, pero verifica la dirección antes de abrirla."
+    : "RECOMENDACIÓN: No se pudo confirmar el nivel de riesgo. Inténtalo más tarde y evita abrir la dirección mientras tanto.";
+
 result.textContent =
   statusTitle + "\n\n" +
   findings.map((item, index) => (index + 1) + ". " + item).join("\n\n") +
+  "\n\n" + recommendation +
   "\n\nLimitación: una consulta sin coincidencias no garantiza que una dirección sea segura.";
+
 
 result.style.whiteSpace = "pre-line";
 result.style.padding = "16px";
