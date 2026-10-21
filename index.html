@@ -1,207 +1,257 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#071426">
-  <meta name="description" content="AI Police Digital Defense: aprende a reconocer mensajes y enlaces sospechosos.">
-  <title>AI Police | Digital Defense</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#07111f">
+  <title>IA Policy | Centro de Defensa Digital</title>
   <style>
     :root {
       color-scheme: dark;
-      --bg: #071426;
-      --panel: #10213a;
-      --cyan: #42e8f5;
-      --text: #f1f7ff;
-      --muted: #a9bdd4;
-      --border: #294461;
+      --bg: #07111f;
+      --panel: #101e30;
+      --border: #243a50;
+      --text: #e8f1fc;
+      --muted: #9bb0c7;
+      --accent: #42e8bd;
+      --blue: #63a8ff;
     }
+
     * { box-sizing: border-box; }
+
     body {
       margin: 0;
-      font-family: Arial, Helvetica, sans-serif;
-      background: radial-gradient(ellipse at top, #123253, var(--bg) 65%);
+      background: radial-gradient(ellipse at top, #132d45, var(--bg) 65%);
       color: var(--text);
+      font-family: Arial, Helvetica, sans-serif;
       min-height: 100vh;
     }
-    header, main, footer {
-      width: min(920px, 92%);
-      margin: auto;
+
+    header {
+      padding: 22px 6%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      border-bottom: 1px solid var(--border);
     }
-    header { padding: 30px 0 18px; }
-    .brand { display: flex; align-items: center; gap: 14px; }
-    .shield {
-      width: 55px; height: 55px; display: grid; place-items: center;
-      border: 2px solid var(--cyan); border-radius: 16px;
-      color: var(--cyan); font-size: 30px;
-      box-shadow: 0 0 22px #42e8f533;
+
+    .brand { font-size: 23px; font-weight: 800; letter-spacing: 1px; }
+    .brand span { color: var(--accent); }
+
+    .status {
+      color: var(--accent);
+      font-size: 12px;
+      border: 1px solid #286a60;
+      border-radius: 20px;
+      padding: 8px 12px;
     }
-    h1 { margin: 0; font-size: clamp(25px, 5vw, 38px); letter-spacing: 2px; }
-    .subtitle { color: var(--cyan); letter-spacing: 3px; font-size: 12px; margin-top: 5px; }
-    .tagline { color: var(--muted); margin: 20px 0 0; }
-    .panel {
-      background: #10213aee;
+
+    main { width: min(1050px, 90%); margin: 45px auto; }
+
+    .hero { margin-bottom: 30px; }
+    .eyebrow { color: var(--accent); text-transform: uppercase; letter-spacing: 2px; font-size: 12px; }
+    h1 { font-size: clamp(30px, 5vw, 48px); margin: 12px 0; }
+    .intro { color: var(--muted); line-height: 1.7; max-width: 680px; }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+      gap: 18px;
+    }
+
+    .card {
+      background: rgba(16, 30, 48, .94);
       border: 1px solid var(--border);
-      border-radius: 18px;
-      padding: clamp(18px, 4vw, 30px);
-      margin: 20px 0;
-      box-shadow: 0 12px 36px #0003;
+      border-radius: 16px;
+      padding: 22px;
     }
-    h2 { margin-top: 0; font-size: 22px; }
-    label { display: block; margin: 16px 0 8px; font-weight: bold; }
-    textarea {
-      width: 100%; min-height: 155px; resize: vertical;
-      background: #071426; color: var(--text);
-      border: 1px solid #365675; border-radius: 10px;
-      padding: 14px; font: inherit; line-height: 1.5;
+
+    .icon { font-size: 26px; }
+    h2 { font-size: 19px; margin: 12px 0; }
+    .muted { color: var(--muted); line-height: 1.6; font-size: 14px; }
+
+    label { display: block; margin: 18px 0 8px; font-size: 14px; }
+
+    textarea, input {
+      width: 100%;
+      padding: 13px;
+      border-radius: 9px;
+      border: 1px solid var(--border);
+      background: #081525;
+      color: var(--text);
+      font: inherit;
     }
-    textarea:focus { outline: 2px solid var(--cyan); }
+
+    textarea { min-height: 115px; resize: vertical; }
+
     button {
-      border: 0; border-radius: 10px; padding: 13px 18px;
-      font-size: 15px; font-weight: bold; cursor: pointer;
+      border: 0;
+      background: var(--accent);
+      color: #06151b;
+      font-weight: 700;
+      padding: 12px 16px;
+      border-radius: 9px;
+      cursor: pointer;
+      margin-top: 12px;
     }
-    .primary { background: var(--cyan); color: #061426; margin-top: 14px; }
-    .secondary { background: #203b59; color: var(--text); margin: 14px 0 0 8px; }
+
     button:hover { filter: brightness(1.08); }
-    .result { margin-top: 20px; padding: 16px; border-radius: 12px; background: #071426; }
-    .result h3 { margin: 0 0 8px; }
-    .result p, .result li { line-height: 1.6; }
-    .notice { color: var(--muted); font-size: 13px; line-height: 1.6; }
-    .plans { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 14px; }
-    .plan { border: 1px solid var(--border); padding: 18px; border-radius: 12px; }
-    .price { font-size: 25px; font-weight: bold; color: var(--cyan); }
-    footer { padding: 10px 0 35px; color: var(--muted); font-size: 12px; }
-    a { color: var(--cyan); }
+    button:focus-visible, textarea:focus-visible, input:focus-visible {
+      outline: 2px solid var(--blue);
+      outline-offset: 3px;
+    }
+
+    .secondary {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text);
+    }
+
+    #result {
+      margin-top: 16px;
+      padding: 15px;
+      background: #081525;
+      border-radius: 9px;
+      border: 1px solid var(--border);
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+      line-height: 1.65;
+    }
+
+    .hidden { display: none; }
+
+    footer {
+      text-align: center;
+      color: var(--muted);
+      padding: 30px 15px;
+      font-size: 12px;
+    }
   </style>
 </head>
 <body>
   <header>
-    <div class="brand">
-      <div class="shield" aria-hidden="true">⬡</div>
-      <div>
-        <h1>AI POLICE</h1>
-        <div class="subtitle">DIGITAL DEFENSE</div>
-      </div>
-    </div>
-    <p class="tagline">Detectar · Comprender · Proteger</p>
+    <div class="brand">IA <span>POLICY</span></div>
+    <div class="status">● SISTEMA LOCAL ACTIVO</div>
   </header>
 
   <main>
-    <section class="panel">
-      <h2>🛡️ Analizador de mensajes sospechosos</h2>
-      <p>Revisa un mensaje o enlace antes de responder o abrirlo.</p>
-      <label for="message">Pega aquí el mensaje o enlace</label>
-      <textarea id="message" placeholder="Ejemplo: Tu cuenta será bloqueada. Haz clic en este enlace para verificar tu contraseña..."></textarea>
-      <button class="primary" id="analyze">Analizar mensaje</button>
-      <button class="secondary" id="clear">Limpiar</button>
-      <div id="result" class="result" aria-live="polite" hidden></div>
-      <p class="notice">Privacidad: el análisis de esta versión se realiza localmente en tu navegador. No pegues contraseñas, códigos de acceso ni datos bancarios.</p>
+    <section class="hero">
+      <div class="eyebrow">Defensa digital · Versión inicial</div>
+      <h1>Centro de Defensa Inteligente</h1>
+      <p class="intro">
+        Un espacio para organizar indicadores sospechosos, evaluar señales
+        de riesgo y preparar medidas preventivas de ciberseguridad.
+      </p>
     </section>
 
-    <section class="panel">
-      <h2>¿Cómo funciona?</h2>
-      <p>AI Police busca señales habituales de riesgo, como urgencia, solicitudes de contraseñas, premios inesperados o enlaces sospechosos.</p>
-      <p class="notice">Este prototipo usa reglas básicas. No consulta todavía bases de datos de amenazas en tiempo real y no puede confirmar si un mensaje es malicioso o seguro.</p>
-    </section>
+    <section class="grid">
+      <article class="card">
+        <div class="icon">⌕</div>
+        <h2>Analizador de indicadores</h2>
+        <p class="muted">
+          Revisa texto, enlaces o indicadores que quieras examinar.
+          El análisis inicial utiliza reglas locales y no consulta fuentes externas.
+        </p>
 
-    <section class="panel">
-      <h2>Planes previstos</h2>
-      <div class="plans">
-        <div class="plan">
-          <h3>Free</h3>
-          <div class="price">Gratis</div>
-          <p>Análisis básico para comenzar.</p>
-        </div>
-        <div class="plan">
-          <h3>Premium</h3>
-          <div class="price">US$4,99/mes</div>
-          <p>Idea de precio; funciones aún no activadas.</p>
-        </div>
-        <div class="plan">
-          <h3>Business</h3>
-          <div class="price">US$19,99/mes</div>
-          <p>Idea de precio; funciones aún no activadas.</p>
-        </div>
-      </div>
-      <p class="notice">Los precios son propuestas, no planes de pago activos. Esta web no procesa pagos.</p>
+        <label for="indicator">Indicador que deseas revisar</label>
+        <textarea id="indicator" placeholder="Pega aquí un enlace o texto sospechoso. No incluyas contraseñas ni datos privados."></textarea>
+        <button id="analyze">Analizar indicador</button>
+        <button class="secondary" id="clear">Limpiar</button>
+        <div id="result" class="hidden" role="status" aria-live="polite"></div>
+      </article>
+
+      <article class="card">
+        <div class="icon">🛡️</div>
+        <h2>Centro de prevención</h2>
+        <p class="muted">Medidas básicas para reducir riesgos digitales.</p>
+        <ul class="muted">
+          <li>Activa la autenticación multifactor.</li>
+          <li>Utiliza contraseñas únicas y un gestor confiable.</li>
+          <li>Actualiza el sistema y las aplicaciones.</li>
+          <li>Verifica el dominio antes de iniciar sesión.</li>
+          <li>No descargues archivos inesperados.</li>
+        </ul>
+      </article>
+
+      <article class="card">
+        <div class="icon">◈</div>
+        <h2>Registro de observaciones</h2>
+        <p class="muted">
+          Escribe una nota para organizar una investigación.
+          Se mantendrá en esta página mientras no la cierres.
+        </p>
+        <label for="notes">Nota de investigación</label>
+        <textarea id="notes" placeholder="Fecha, observación y medidas preventivas..."></textarea>
+        <button id="saveNote">Preparar nota</button>
+        <div id="noteResult" class="muted hidden" role="status" aria-live="polite"></div>
+      </article>
     </section>
   </main>
 
   <footer>
-    AI Police | Digital Defense · Prototipo educativo.
-    Ningún sistema de detección ofrece garantías absolutas.
+    IA Policy · Herramienta preventiva en fase inicial.
+    Los resultados son orientativos y no sustituyen un análisis profesional.
   </footer>
 
   <script>
-    const message = document.getElementById("message");
+    const indicator = document.getElementById("indicator");
     const result = document.getElementById("result");
 
     document.getElementById("analyze").addEventListener("click", () => {
-      const text = message.value.trim();
-      if (!text) {
-        result.hidden = false;
-        result.innerHTML = "<h3>Introduce un mensaje</h3><p>Pega primero el texto que quieres revisar.</p>";
+      const value = indicator.value.trim();
+
+      result.classList.remove("hidden");
+
+      if (!value) {
+        result.textContent = "Introduce un indicador para iniciar la revisión.";
         return;
       }
 
-      const checks = [
-        { re: /contraseñ|password|clave|código de verificaci[oó]n|c[oó]digo otp/i, label: "Solicita contraseñas o códigos de acceso" },
-        { re: /urgente|inmediatamente|última oportunidad|ahora mismo|en \d+ horas/i, label: "Utiliza lenguaje de urgencia" },
-        { re: /premio|ganaste|ganador|regalo gratis|has sido seleccionado/i, label: "Promete un premio o beneficio inesperado" },
-        { re: /cuenta.*(bloque|suspend|cerrar)|bloque.*cuenta|actividad sospechosa/i, label: "Amenaza con bloquear o suspender una cuenta" },
-        { re: /https?:\/\/|www\./i, label: "Contiene un enlace que conviene verificar" },
-        { re: /transferencia|pago inmediato|tarjeta bancaria|datos bancarios/i, label: "Menciona pagos o datos financieros" }
-      ];
+      const findings = [];
+      const lower = value.toLowerCase();
 
-      const found = checks.filter(item => item.re.test(text));
-      const level = found.length >= 3 ? "Varias señales de alerta" :
-                    found.length >= 1 ? "Precaución recomendada" :
-                    "No se detectaron señales habituales";
-
-      const color = found.length >= 3 ? "#ff7777" :
-                    found.length >= 1 ? "#ffd166" : "#42e8a5";
-
-      result.hidden = false;
-      result.replaceChildren();
-
-      const title = document.createElement("h3");
-      title.textContent = "Resultado preliminar";
-      title.style.color = color;
-      result.appendChild(title);
-
-      const status = document.createElement("p");
-      status.textContent = level;
-      status.style.fontWeight = "bold";
-      result.appendChild(status);
-
-      if (found.length) {
-        const list = document.createElement("ul");
-        found.forEach(item => {
-          const li = document.createElement("li");
-          li.textContent = item.label;
-          list.appendChild(li);
-        });
-        result.appendChild(list);
-      } else {
-        const p = document.createElement("p");
-        p.textContent = "Las reglas básicas no encontraron señales habituales. Eso no garantiza que el mensaje sea seguro.";
-        result.appendChild(p);
+      if (/https?:\/\//i.test(value)) {
+        findings.push("Se detectó un enlace. Comprueba el dominio exacto antes de abrirlo.");
       }
 
-      const advice = document.createElement("p");
-      advice.textContent = "Recomendación: no abras enlaces inesperados ni compartas contraseñas o códigos. Verifica la solicitud por un canal oficial e independiente.";
-      result.appendChild(advice);
+      if (/@/.test(value) && /https?:\/\//i.test(value)) {
+        findings.push("El texto contiene un símbolo @ junto a un enlace. Comprueba que no oculte el dominio real.");
+      }
 
-      const disclaimer = document.createElement("p");
-      disclaimer.className = "notice";
-      disclaimer.textContent = "Este resultado se basa solo en reglas locales sencillas; no confirma ni descarta un ataque.";
-      result.appendChild(disclaimer);
+      if (/(password|contraseña|verify|verifica|urgent|urgente|premio|wallet|seed phrase)/i.test(value)) {
+        findings.push("Hay palabras que pueden aparecer en mensajes de riesgo. El contexto es importante.");
+      }
+
+      if (/(bit\.ly|tinyurl\.com|t\.co)\//i.test(value)) {
+        findings.push("Se detectó un dominio acortador. Comprueba el destino por un medio seguro.");
+      }
+
+      if (findings.length === 0) {
+        findings.push("No se detectaron patrones básicos de esta lista. Esto no demuestra que el contenido sea seguro.");
+      }
+
+      result.textContent =
+        "REVISIÓN PRELIMINAR\n\n" +
+        findings.map((item, index) => (index + 1) + ". " + item).join("\n\n") +
+        "\n\nLimitación: esta herramienta usa reglas sencillas locales. No consulta reputación web, no ejecuta archivos y no confirma si un sitio es malicioso.";
     });
 
     document.getElementById("clear").addEventListener("click", () => {
-      message.value = "";
-      result.hidden = true;
-      result.replaceChildren();
+      indicator.value = "";
+      result.textContent = "";
+      result.classList.add("hidden");
+    });
+
+    document.getElementById("saveNote").addEventListener("click", () => {
+      const notes = document.getElementById("notes").value.trim();
+      const noteResult = document.getElementById("noteResult");
+
+      noteResult.classList.remove("hidden");
+      noteResult.textContent = notes
+        ? "Nota preparada en pantalla. Cópiala a un lugar seguro si deseas conservarla; todavía no se ha guardado en un servidor."
+        : "Escribe una nota antes de prepararla.";
     });
   </script>
 </body>
