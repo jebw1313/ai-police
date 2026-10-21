@@ -279,26 +279,35 @@ document.getElementById("analyze").addEventListener("click", async () => {
   }
 
   
-let statusTitle = "REVISIÓN PRELIMINAR";
-let statusColor = "#b45309";
+
+let statusTitle = "⚠️ NO SE PUDO VERIFICAR";
+let statusColor = "#fde68a";
 let statusBackground = "#451a03";
 
 if (findings.some(item => item.startsWith("ALERTA:"))) {
   statusTitle = "⚠️ AMENAZA REGISTRADA";
   statusColor = "#fca5a5";
   statusBackground = "#450a0a";
-} else if (findings.some(item => item.includes("no encontró esta URL"))) {
+} else if (findings.some(item =>
+  item.includes("URLhaus no encontró esta URL")
+)) {
   statusTitle = "✓ SIN COINCIDENCIAS CONOCIDAS";
   statusColor = "#86efac";
   statusBackground = "#052e16";
 } else if (findings.some(item =>
-  item.includes("No se pudo") ||
-  item.includes("no devolvió")
+  item.includes("No se pudo conectar") ||
+  item.includes("No se pudo completar") ||
+  item.includes("No se pudo conectar con URLhaus") ||
+  item.includes("no devolvió un resultado concluyente") ||
+  item.includes("No se consultó URLhaus")
 )) {
   statusTitle = "⚠️ NO SE PUDO VERIFICAR";
-  statusColor = "#fde68a";
-  statusBackground = "#451a03";
+} else {
+  statusTitle = "REVISIÓN PRELIMINAR";
+  statusColor = "#cbd5e1";
+  statusBackground = "#1e293b";
 }
+
 
 result.textContent =
   statusTitle + "\n\n" +
