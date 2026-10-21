@@ -128,88 +128,105 @@
       padding: 30px 15px;
       font-size: 12px;
     }
-        /* Mejoras visuales de IA POLICE */
-    body {
-      background:
-        radial-gradient(ellipse at top, #102a43 0%, #07111f 55%);
-    }
+       /* Diseño moderno y tecnológico de IA POLICE */
+body {
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(38, 105, 255, 0.24), transparent 48%),
+    linear-gradient(160deg, #07111f 0%, #09172b 55%, #050b15 100%);
+}
 
-    header {
-      border-bottom: 1px solid #2c4965;
-      padding-top: 22px;
-      padding-bottom: 22px;
-    }
+header {
+  border-bottom: 1px solid rgba(74, 144, 255, 0.35);
+  padding-top: 22px;
+  padding-bottom: 22px;
+  background: rgba(5, 13, 27, 0.72);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.18);
+}
 
-    .brand {
-      font-size: 25px;
-      font-weight: 800;
-      letter-spacing: 2px;
-    }
+.brand {
+  font-size: 25px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  text-shadow: 0 0 22px rgba(55, 145, 255, 0.3);
+}
 
-    .brand span {
-      color: #42e8bd;
-    }
+.brand span {
+  color: #58a6ff;
+}
 
-    .status {
-      color: #42e8bd;
-      font-size: 12px;
-      letter-spacing: 1px;
-    }
+.status {
+  color: #52e6c2;
+  font-size: 12px;
+  letter-spacing: 1px;
+}
 
-    .hero {
-      padding-top: 48px;
-      padding-bottom: 28px;
-    }
+.hero {
+  padding-top: 48px;
+  padding-bottom: 30px;
+}
 
-    .hero h1 {
-      letter-spacing: -1px;
-      line-height: 1.2;
-    }
+.hero h1 {
+  letter-spacing: -1px;
+  line-height: 1.2;
+  text-shadow: 0 0 28px rgba(67, 132, 255, 0.18);
+}
 
-    .card {
-      border: 1px solid #2c4965;
-      border-radius: 16px;
-      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.22);
-      transition: border-color 0.2s ease, transform 0.2s ease;
-    }
+.card {
+  background: linear-gradient(145deg, rgba(19, 38, 65, 0.96), rgba(10, 22, 40, 0.96));
+  border: 1px solid rgba(81, 137, 205, 0.38);
+  border-radius: 16px;
+  box-shadow: 0 14px 38px rgba(0, 0, 0, 0.25);
+  transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
 
-    .card:hover {
-      border-color: #42e8bd;
-      transform: translateY(-2px);
-    }
+.card:hover {
+  border-color: #438dff;
+  box-shadow: 0 14px 38px rgba(36, 112, 255, 0.12);
+  transform: translateY(-2px);
+}
 
-    button {
-      border-radius: 9px;
-      font-weight: 700;
-      transition: filter 0.2s ease;
-    }
+.card .icon {
+  color: #58a6ff;
+}
 
-    button:hover {
-      filter: brightness(1.12);
-    }
+button {
+  border-radius: 9px;
+  font-weight: 700;
+  transition: filter 0.2s ease, transform 0.2s ease;
+}
 
-    textarea {
-      border-radius: 9px;
-      line-height: 1.5;
-    }
+button:hover {
+  filter: brightness(1.13);
+  transform: translateY(-1px);
+}
 
-    @media (max-width: 600px) {
-      .hero {
-        padding-top: 30px;
-      }
+textarea {
+  border-radius: 9px;
+  line-height: 1.5;
+}
 
-      .brand {
-        font-size: 21px;
-      }
+:focus-visible {
+  outline: 2px solid #58a6ff;
+  outline-offset: 3px;
+}
 
-      .status {
-        font-size: 10px;
-      }
+@media (max-width: 600px) {
+  .hero {
+    padding-top: 30px;
+  }
 
-      .card {
-        border-radius: 12px;
-      }
-    }
+  .brand {
+    font-size: 21px;
+  }
+
+  .status {
+    font-size: 10px;
+  }
+
+  .card {
+    border-radius: 12px;
+  }
+}
   </style>
 </head>
 <body>
